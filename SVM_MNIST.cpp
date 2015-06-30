@@ -328,17 +328,69 @@ int main(void)
 
     Ptr<SVM> model = SVM::create();
              model->setType(SVM::C_SVC);
-             model->setKernel(SVM::LINEAR);
-             model->setC(1);
+             //model->setKernel(SVM::LINEAR);
+             model->setKernel(SVM::RBF);
+             //model->setC(10);
+             //model->setGamma(0.01);
+
+/*
+
+     *********** SVM Setters ***********
+
+virtual void 	setC (double val)=0
+ 
+virtual void 	setClassWeights (const cv::Mat &val)=0
+ 
+virtual void 	setCoef0 (double val)=0
+ 
+virtual void 	setCustomKernel (const Ptr< Kernel > &_kernel)=0
+ 
+virtual void 	setDegree (double val)=0
+ 
+virtual void 	setGamma (double val)=0
+ 
+virtual void 	setKernel (int kernelType)=0
+ 
+virtual void 	setNu (double val)=0
+ 
+virtual void 	setP (double val)=0
+ 
+virtual void 	setTermCriteria (const cv::TermCriteria &val)=0
+ 
+virtual void 	setType (int val)=0
+
+
+Old:
+
+Parameters
+Listing 1:  Example CvSVMParams
+CvSVMParams  param = CvSVMParams();
+param.svm_type = CvSVM::C_SVC;
+param.kernel_type = CvSVM::LINEAR;
+param.degree = 0;  // poly
+param.gamma = 20;  // poly, rbf, sigmoid
+param.coef0 = 0;   // poly, sigmoid
+param.C = 7;       // CV_SVM_C_SVC, CV_SVM_EPS_SVR, and  CV_SVM_NU_SVR
+param.nu = 0.0;   //  CV_SVM_NU_SVC, CV_SVM_ONE_CLASS, and CV_SVM_NU_SVR
+param.p = 0.0;    //  CV_SVM_EPS_SVR
+param.class_weights = NULL; // for CV_SVM_C_SVC
+param.term_crit.type = CV_TERMCRIT_ITER | CV_TERMCRIT_EPS;
+param.term_crit.max_iter = 1000;
+param.term_crit.epsilon = 1e-6;
+
+*/
+
+
 
      before = static_cast<double>(getTickCount());    
    
-             model->train(tdata);
+               model->trainAuto( tdata, 10 );
+             //model->train(tdata);
 
      after =  static_cast<double>(getTickCount()); 
      duration_in_ms = 1000.0*(after - before)/getTickFrequency();
  
-    cout << "Training completed after "<< duration_in_ms <<" ms...\n";
+    cout << "Training completed after "<< duration_in_ms/60000 <<" mins...\n";
 
 
 
